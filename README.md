@@ -86,3 +86,29 @@ source ~/.zshrc
 * **Scannability:** Added clear visual breaks, emojis, and a handy reference table at the bottom.
 
 ```
+### 6. Migrate History From Bash To Zsh
+
+To migrate the history from bash to zsh:
+
+
+```bash
+history -a
+
+cat ~/.bash_history >> ~/.zsh_history
+fc -RI
+
+python3 -c "
+import time
+now = int(time.time())
+with open('.bash_history', 'r', errors='ignore') as f:
+    lines = f.readlines()
+with open('.zsh_history', 'a') as f:
+    for line in lines:
+        if line.strip():
+            f.write(f': {now}:0;{line}')
+"
+
+fc -RI
+```
+
+
